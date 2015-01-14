@@ -1,11 +1,5 @@
-FROM vbatts/slackware
+FROM tibux/slackware-gcc
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
-
-RUN slackpkg update
-
-# gcc
-RUN slackpkg -batch=on -default_answer=y install binutils gcc-4 gcc-g++-4 glibc-2 libmpc kernel-headers make
-RUN slackpkg -batch=on -default_answer=y install autoconf automake m4 zlib
 
 # git
 RUN slackpkg -batch=on -default_answer=y install git-1 curl cyrus-sasl-2.1
