@@ -3,7 +3,6 @@ MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 # git
 RUN slackpkg -batch=on -default_answer=y install git-1 curl cyrus-sasl-2.1
-RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 
 # omnibus
 RUN slackpkg -batch=on -default_answer=y install libyaml ruby perl
