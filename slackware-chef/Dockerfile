@@ -10,7 +10,7 @@ RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_V
 RUN cd /root/omnibus-chef && bundle install --without development
 
 COPY libffi.rb /root/omnibus-chef/config/software/libffi.rb
-COPY chef.rb /root/omnibus-chef/config/software/chef.rb
+COPY chef.rb /root/omnibus-chef/config/projects/chef.rb
 
 RUN echo "build_version \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
 RUN echo "override :chef, version: \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
