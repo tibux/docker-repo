@@ -6,7 +6,7 @@ RUN git config --global user.email "you@example.com" && git config --global user
 ENV OHAI_VERSION 8.0.1
 ENV CHEF_VERSION 12.0.3
 
-RUN cd /root && git clone https://github.com/chef/omnibus-chef -b chef-${CHEF_VERSION}
+RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_VERSION}"
 RUN cd /root/omnibus-chef && bundle install --without development
 
 COPY libffi.rb /root/omnibus-chef/config/software/libffi.rb
