@@ -16,6 +16,8 @@ RUN echo "build_version \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projec
 RUN echo "override :chef, version: \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
 RUN echo "override :ohai, version: \"${OHAI_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
 
-RUN cd /root/omnibus-chef && bundle exec omnibus build chef -l debug
+RUN cd /root/omnibus-chef && bundle exec omnibus build chef
 RUN cd /root/omnibus-chef && bundle exec omnibus clean chef --purge
+
+RUN sh /root/omnibus-chef/pkg/chef-${CHEF_VERSION}_1.x86_64.sh
 
