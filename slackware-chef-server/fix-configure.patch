@@ -1,0 +1,19 @@
+--- ./erts/configure.orig	2013-11-14 15:52:47.324499062 +0000
++++ ./erts/configure	2013-11-14 15:59:02.169139889 +0000
+@@ -18314,11 +18314,11 @@
+ 	fi
+     done
+ 
+-    if test "x$TERMCAP_LIB" = "x"; then
+-	{ { echo "$as_me:$LINENO: error: No curses library functions found" >&5
+-echo "$as_me: error: No curses library functions found" >&2;}
+-   { (exit 1); exit 1; }; }
+-    fi
++#    if test "x$TERMCAP_LIB" = "x"; then
++#	{ { echo "$as_me:$LINENO: error: No curses library functions found" >&5
++#echo "$as_me: error: No curses library functions found" >&2;}
++#   { (exit 1); exit 1; }; }
++#    fi
+ fi
+ 
+ 
