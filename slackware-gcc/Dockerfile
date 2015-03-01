@@ -1,8 +1,8 @@
 FROM vbatts/slackware
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
-RUN slackpkg update
-RUN slackpkg upgrade patches
+RUN slackpkg -batch=on -default_answer=y update
+RUN slackpkg -batch=on -default_answer=y upgrade patches
 
 # gcc
 RUN slackpkg -batch=on -default_answer=y install binutils gcc-4 gcc-g++-4 \
