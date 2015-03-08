@@ -7,7 +7,7 @@ ENV CHEF_VERSION 12.0.3
 RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_VERSION}"
 RUN cd /root/omnibus-chef && bundle install --without development
 
-run echo "use_git_caching false" >> /root/omnibus-chef/omnibus.rb
+RUN echo "use_git_caching false" >> /root/omnibus-chef/omnibus.rb
 
 COPY libffi.rb /root/omnibus-chef/config/software/libffi.rb
 COPY chef.rb /root/omnibus-chef/config/projects/chef.rb
