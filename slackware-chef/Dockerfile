@@ -1,8 +1,6 @@
 FROM tibux/slackware-omnibus
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
-#RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-
 ENV OHAI_VERSION 8.0.1
 ENV CHEF_VERSION 12.0.3
 
