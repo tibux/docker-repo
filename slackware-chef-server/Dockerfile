@@ -1,10 +1,10 @@
 FROM tibux/slackware-omnibus
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
-RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-
 #RUN cd /root && git clone https://github.com/chef/opscode-omnibus
 RUN cd /root && git clone https://github.com/tibux/opscode-omnibus
+
+RUN echo "use_git_caching false" >> /root/opscode-omnibus/omnibus.rb
 
 RUN cd /root/opscode-omnibus && bundle install --binstubs
 
