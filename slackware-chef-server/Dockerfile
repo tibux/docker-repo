@@ -3,10 +3,9 @@ MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 #RUN cd /root && git clone https://github.com/chef/opscode-omnibus
 RUN cd /root && git clone https://github.com/tibux/opscode-omnibus
+RUN cd /root/opscode-omnibus && bundle install --binstubs
 
 RUN echo "use_git_caching false" >> /root/opscode-omnibus/omnibus.rb
-
-RUN cd /root/opscode-omnibus && bundle install --binstubs
 
 #COPY libffi.rb /root/opscode-omnibus/config/software/libffi.rb
 
