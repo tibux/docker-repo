@@ -4,7 +4,8 @@ MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 #ENV OHAI_VERSION 8.3.0
 #ENV CHEF_VERSION 12.4.1
 
-RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_VERSION}"
+#RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_VERSION}"
+RUN cd /root && git clone https://github.com/chef/omnibus-chef
 RUN cd /root/omnibus-chef && bundle install --without development
 
 RUN echo "use_git_caching false" >> /root/omnibus-chef/omnibus.rb
