@@ -13,71 +13,105 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 name "chef"
-friendly_name "Chef Client"
-maintainer "Chef Software, Inc."
-homepage "https://www.getchef.com"
+default_version "master"
 
-build_iteration 1
-#build_version do
-  # Use chef to determine the build version
-#  source :git, from_dependency: 'chef'
+source git: "git://github.com/obiesmans/chef"
 
-  # Output a SemVer compliant version string
-#  output_format :semver
-#end
+relative_path "chef"
 
 if windows?
-  # NOTE: Ruby DevKit fundamentally CANNOT be installed into "Program Files"
-  #       Native gems will use gcc which will barf on files with spaces,
-  #       which is only fixable if everyone in the world fixes their Makefiles
-  install_dir  "#{default_root}/opscode/#{name}"
-  package_name "chef-client"
+  dependency "ruby-windows"
+  dependency "openssl-windows"
+  dependency "ruby-windows-devkit"
+  dependency "ruby-windows-devkit-bash"
+  dependency "cacerts"
+  dependency "rubygems"
 else
-  install_dir "#{default_root}/#{name}"
+  dependency "ruby"
+  dependency "rubygems"
+  dependency "libffi"
 end
 
-# As of 27 October 2014, the newest CA cert bundle does not work with AWS's
-# root cert. See:
-# * https://github.com/opscode/chef-dk/issues/199
-# * https://blog.mozilla.org/security/2014/09/08/phasing-out-certificates-with-1024-bit-rsa-keys/
-# * https://forums.aws.amazon.com/thread.jspa?threadID=164095
-# * https://github.com/opscode/omnibus-supermarket/commit/89197026af2931de82cfdc13d92ca2230cced3b6
-#
-# For now we resolve it by using an older version of the cert. This only works
-# if you have this version of the CA bundle stored via S3 caching (which Chef
-# Software does).
-override :cacerts, version: '2014.08.20'
+dependency "bundler"
+dependency "ohai"
+dependency "appbundler"
 
-override :bundler,        version: "1.7.2"
-override :ruby,           version: "2.1.4"
-######
-# Ruby 2.1.3 is currently not working on windows due to:
-# https://github.com/ffi/ffi/issues/375
-# Enable below once above issue is fixed.
-# override :'ruby-windows', version: "2.1.3"
-# override :'ruby-windows-devkit', version: "4.7.2-20130224-1151"
-override :'ruby-windows', version: "2.0.0-p451"
-######
-override :rubygems,       version: "2.4.4"
+build do
+  env = with_standard_compiler_flags(with_embedded_path)
 
-dependency "preparation"
-dependency "chef"
-dependency "shebang-cleanup"
-dependency "version-manifest"
+  if windows?
+    # Normally we would symlink the required unix tools.
+    # However with the introduction of git-cache to speed up omnibus builds,
+    # we can't do that anymore since git on windows doesn't support symlinks.
+    # https://groups.google.com/forum/#!topic/msysgit/arTTH5GmHRk
+    # Therefore we copy the tools to the necessary places.
+    # We need tar for 'knife cookbook site install' to function correctly
+    {
+      'tar.exe'          => 'bsdtar.exe',
+      'libarchive-2.dll' => 'libarchive-2.dll',
+      'libexpat-1.dll'   => 'libexpat-1.dll',
+      'liblzma-1.dll'    => 'liblzma-1.dll',
+      'libbz2-2.dll'     => 'libbz2-2.dll',
+      'libz-1.dll'       => 'libz-1.dll',
+    }.each do |target, to|
+      copy "#{install_dir}/embedded/mingw/bin/#{to}", "#{install_dir}/bin/#{target}"
+    end
 
-package :rpm do
-  signing_passphrase ENV['OMNIBUS_RPM_SIGNING_PASSPHRASE']
-end
+    bundle "install --without server docgen", env: env
 
-package :pkg do
-  identifier "com.getchef.pkg.chef"
-  signing_identity "Developer ID Installer: Opscode Inc. (9NBR9JL2R2)"
-end
-compress :dmg
+    # Install components that live inside Chef's git repo. For now this is just
+    # 'chef-config'
+    bundle "exec rake install_components", env: env
 
-package :msi do
-  upgrade_code "D607A85C-BDFA-4F08-83ED-2ECB4DCD6BC5"
-  wix_candle_extension 'WixUtilExtension'
+    gem "build chef-{windows,x86-mingw32}.gemspec", env: env
+
+    gem "install chef*mingw32.gem" \
+        " --no-ri --no-rdoc" \
+        " --verbose", env: env
+
+    block "Build Event Log Dll" do
+      Dir.chdir software.project_dir do
+        rake = windows_safe_path("#{install_dir}/embedded/bin/rake")
+        `#{rake} -rdevkit build_eventlog"` if File.exist? "#{software.project_dir}/ext/win32-eventlog"
+      end
+    end
+  else
+
+    # install the whole bundle first
+    bundle "install --without server docgen", env: env
+
+    # Install components that live inside Chef's git repo. For now this is just
+    # 'chef-config'
+    bundle "exec rake install_components", env: env
+
+    gem "build chef.gemspec", env: env
+
+    # Don't use -n #{install_dir}/bin. Appbundler will take care of them later
+    gem "install chef*.gem " \
+        " --no-ri --no-rdoc", env: env
+
+  end
+
+  auxiliary_gems = {}
+  auxiliary_gems['ruby-shadow'] = '>= 0.0.0' unless aix? || windows?
+
+  auxiliary_gems.each do |name, version|
+    gem "install #{name}" \
+        " --version '#{version}'" \
+        " --no-ri --no-rdoc" \
+        " --verbose", env: env
+  end
+
+  appbundle 'chef'
+  appbundle 'ohai'
+
+  # Clean up
+  delete "#{install_dir}/embedded/docs"
+  delete "#{install_dir}/embedded/share/man"
+  delete "#{install_dir}/embedded/share/doc"
+  delete "#{install_dir}/embedded/share/gtk-doc"
+  delete "#{install_dir}/embedded/ssl/man"
+  delete "#{install_dir}/embedded/man"
+  delete "#{install_dir}/embedded/info"
 end
