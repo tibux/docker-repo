@@ -20,5 +20,5 @@ COPY chef.rb /root/omnibus-chef/config/software/chef.rb
 RUN cd /root/omnibus-chef && bundle exec omnibus build chef
 RUN cd /root/omnibus-chef && bundle exec omnibus clean chef --purge
 
-RUN sh /root/omnibus-chef/pkg/chef-${CHEF_VERSION}_1.x86_64.sh
+RUN sh /root/omnibus-chef/pkg/chef-*.x86_64.sh
 
