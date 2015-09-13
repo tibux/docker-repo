@@ -8,3 +8,4 @@ RUN wget -O /var/cache/sbopkg/jdk-${JDK_VERSION}-linux-x64.tar.gz \
       http://download.oracle.com/otn-pub/java/jdk/${JDK_VERSION}-b27/jdk-${JDK_VERSION}-linux-x64.tar.gz
 RUN sbopkg -Bi jdk && rm /var/run/sbopkg.pid
 
+ENV JAVA_HOME /usr/lib64/java
