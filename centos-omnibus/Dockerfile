@@ -2,8 +2,6 @@ FROM centos:centos7
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 # Original author: Jesse Reynolds in https://github.com/flapjack/omnibus-centos
 
-#RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-
 RUN rpm -ivh http://download.fedoraproject.org/pub/epel/7/$(arch)/e/epel-release-7-5.noarch.rpm
 RUN yum groupinstall -y 'Development Tools'
 
