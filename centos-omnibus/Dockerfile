@@ -17,14 +17,14 @@ RUN yum install -y \
     ruby \
     ruby-devel
 
-RUN gem install bundler omnibus
+RUN gem install bundler
 
 # Work around git/go version issues on centos - https://twitter.com/gniemeyer/status/472318780472045568
-RUN yum remove -y git
-
-RUN cd /usr/src && \
-    curl -o git-1.9.4.tar.gz https://www.kernel.org/pub/software/scm/git/git-1.9.4.tar.gz && \
-    tar xzf git-1.9.4.tar.gz && cd git-1.9.4 && \
-    make prefix=/usr all && make prefix=/usr install && \
-    cd .. && rm -rf git-1.9.4.tar.gz git-1.9.4
+#RUN yum remove -y git
+#
+#RUN cd /usr/src && \
+#    curl -o git-1.9.4.tar.gz https://www.kernel.org/pub/software/scm/git/git-1.9.4.tar.gz && \
+#    tar xzf git-1.9.4.tar.gz && cd git-1.9.4 && \
+#    make prefix=/usr all && make prefix=/usr install && \
+#    cd .. && rm -rf git-1.9.4.tar.gz git-1.9.4
 
