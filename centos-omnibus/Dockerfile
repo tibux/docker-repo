@@ -11,4 +11,7 @@ RUN install -d /var/cache/omnibus -o omnibus-build -g omnibus-build
 RUN rpm -ivh http://download.fedoraproject.org/pub/epel/7/$(arch)/e/epel-release-7-5.noarch.rpm
 RUN yum install -y fakeroot
 
-# bundle install --path .bundle --binstubs
+# install -o omnibus-build -g omnibus-build -d /opt/<PROJECT>
+# su - omnibus-build
+# omnibus new <PROJECT>
+# cd <PROJECT> && bundle install --path .bundle --binstubs
