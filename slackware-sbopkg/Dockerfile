@@ -6,8 +6,8 @@ ENV TERM xterm
 
 RUN slackpkg -batch=on -default_answer=y install rsync
 
-RUN wget http://sbopkg.googlecode.com/files/sbopkg-0.37.0-noarch-1_cng.tgz && \
-    installpkg sbopkg-0.37.0-noarch-1_cng.tgz && rm -f sbopkg-0.37.0-noarch-1_cng.tgz
+RUN wget http://sbopkg.googlecode.com/files/sbopkg-0.38.1-noarch-1_cng.tgz && \
+    installpkg sbopkg-0.38.1-noarch-1_cng.tgz && rm -f sbopkg-0.38.1-noarch-1_cng.tgz
 
 RUN mkdir -p /var/lib/sbopkg/SBo/`cat /etc/slackware-version \
     | awk -F' ' '{print $2}'` /var/lib/sbopkg/queues /var/log/sbopkg /var/cache/sbopkg /tmp/SBo
