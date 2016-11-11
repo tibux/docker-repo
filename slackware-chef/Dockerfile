@@ -4,22 +4,15 @@ MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 #ENV OHAI_VERSION 8.3.0
 #ENV CHEF_VERSION 12.4.1
 
-#RUN cd /root && git clone https://github.com/chef/omnibus-chef -b "chef-${CHEF_VERSION}"
-RUN cd /root && git clone https://github.com/chef/omnibus-chef
-RUN cd /root/omnibus-chef && bundle install --without development
+RUN slackpkg -batch=on -default_answer=y install flex
 
-RUN echo "use_git_caching false" >> /root/omnibus-chef/omnibus.rb
+RUN cd /root && git clone https://github.com/chef/chef
+RUN cd /root/chef/omnibus && bundle install --without development
 
-COPY libffi.rb /root/omnibus-chef/config/software/libffi.rb
-COPY chef.rb /root/omnibus-chef/config/software/chef.rb
-#COPY chef.rb /root/omnibus-chef/config/projects/chef.rb
-#
-#RUN echo "build_version \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
-#RUN echo "override :chef, version: \"${CHEF_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
-#RUN echo "override :ohai, version: \"${OHAI_VERSION}\"" >> /root/omnibus-chef/config/projects/chef.rb
+RUN echo "use_git_caching false" >> /root/chef/omnibus/omnibus.rb
 
-RUN cd /root/omnibus-chef && bundle exec omnibus build chef
-RUN cd /root/omnibus-chef && bundle exec omnibus clean chef --purge
+RUN cd /root/chef/omnibus && bundle exec omnibus build chef
+RUN cd /root/chef/omnibus && bundle exec omnibus clean chef --purge
 
-RUN sh /root/omnibus-chef/pkg/chef-*.x86_64.sh
+RUN sh /root/chef/omnibus/pkg/chef-*.x86_64.sh
 
