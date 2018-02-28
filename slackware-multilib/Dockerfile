@@ -8,4 +8,4 @@ RUN upgradepkg --install-new ./14.2/slackware64-compat32/*-compat32/*.t?z
 
 RUN . /etc/profile.d/32dev.sh
 
-RUN sbopkg -Bi steam
+RUN sbopkg -Bi OpenAL -Bi steam
