@@ -1,6 +1,8 @@
 FROM tibux/slackware-sbopkg
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
+RUN slackpkg -batch=on -default_answer=y install lftp
+
 RUN lftp -c 'open http://slackware.com/~alien/multilib/ ; mirror -c -e 14.2'
 
 RUN upgradepkg --reinstall --install-new ./14.2/*.t?z
