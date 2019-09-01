@@ -1,4 +1,4 @@
-FROM vbatts/slackware-base:14.2
+FROM vbatts/slackware:14.2
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 RUN slackpkg -batch=on -default_answer=y update
