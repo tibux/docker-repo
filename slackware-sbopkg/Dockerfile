@@ -4,13 +4,14 @@ MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 # sbopkg
 ENV TERM xterm
 
+ARG sbopkg_version=0.38.1
+ARG sbopkg_tag=1_wsr
+
 RUN slackpkg -batch=on -default_answer=y install rsync
 
-RUN wget https://github.com/sbopkg/sbopkg/releases/download/0.38.1/sbopkg-0.38.1-noarch-1_wsr.tgz && \
-    installpkg sbopkg-0.38.1-noarch-1_wsr.tgz && rm -f sbopkg-0.38.1-noarch-1_wsr.tgz
+RUN wget https://github.com/sbopkg/sbopkg/releases/download/${sbopkg_version}/sbopkg-${sbopkg_version}-noarch-${sbopkg_tag}.tgz \
+  && installpkg sbopkg-${sbopkg_version}-noarch-${sbopkg_tag}.tgz \
+  && rm -f sbopkg-${sbopkg_version}-noarch-${sbopkg_tag}.tgz
 
-RUN mkdir -p /var/lib/sbopkg/SBo/`cat /etc/slackware-version \
-    | awk -F' ' '{print $2}'` /var/lib/sbopkg/queues /var/log/sbopkg /var/cache/sbopkg /tmp/SBo
-
-RUN sbopkg -r
+RUN echo 'C' | sbopkg -r
 
