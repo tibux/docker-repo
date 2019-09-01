@@ -6,6 +6,6 @@ RUN slackpkg -batch=on -default_answer=y upgrade patches
 
 # gcc
 RUN slackpkg -batch=on -default_answer=y install binutils gcc-5 gcc-g++-5 \
-  glibc-2 libmpc kernel-headers make autoconf automake m4 zlib bc \
-  cmake libarchive nettle lzo libxml2
+  gcc-go-5 glibc-2 libmpc kernel-headers make autoconf automake m4 zlib bc \
+  cmake libarchive nettle lzo libxml2 flex
 
