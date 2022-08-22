@@ -1,4 +1,4 @@
-FROM tibux/slackware-sbopkg
+FROM tibux/slackware-sbopkg:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 RUN sbopkg -Bi amazon-corretto

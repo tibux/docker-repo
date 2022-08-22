@@ -1,4 +1,4 @@
-FROM tibux/slackware-gcc
+FROM tibux/slackware-gcc:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 # git

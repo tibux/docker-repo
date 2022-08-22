@@ -1,4 +1,4 @@
-FROM tibux/slackware-git
+FROM tibux/slackware-git:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 # omnibus

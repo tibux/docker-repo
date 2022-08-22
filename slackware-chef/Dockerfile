@@ -1,4 +1,4 @@
-FROM tibux/slackware-omnibus
+FROM tibux/slackware-omnibus:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 #ENV OHAI_VERSION 8.3.0

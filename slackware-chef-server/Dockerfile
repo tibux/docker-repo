@@ -1,4 +1,4 @@
-FROM tibux/slackware-omnibus
+FROM tibux/slackware-omnibus:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 #RUN cd /root && git clone https://github.com/chef/opscode-omnibus

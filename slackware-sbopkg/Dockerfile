@@ -1,10 +1,10 @@
-FROM tibux/slackware-git
+FROM tibux/slackware-git:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 # sbopkg
 ENV TERM xterm
 
-ARG sbopkg_version=0.38.1
+ARG sbopkg_version=0.38.2
 ARG sbopkg_tag=1_wsr
 
 RUN slackpkg -batch=on -default_answer=y install rsync
