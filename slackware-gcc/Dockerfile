@@ -2,7 +2,7 @@ FROM vbatts/slackware:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 RUN slackpkg -batch=on -default_answer=y update
-RUN slackpkg -batch=on -default_answer=y upgrade patches
+RUN slackpkg -batch=on -default_answer=y upgrade patches || :
 
 # gcc
 RUN slackpkg -batch=on -default_answer=y install binutils gcc-11 gcc-g++-11 \
