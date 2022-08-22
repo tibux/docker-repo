@@ -7,6 +7,12 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
+# Env variable
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
+
 jobs:
 
   build:
@@ -15,8 +21,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: Build the Docker image
-      run: docker build . --file slackware-gcc/Dockerfile --tag slackware-gcc:$(date +%s)
-    - name: Build the Docker image
-      run: docker build . --file slackware-git/Dockerfile --tag slackware-git:$(date +%s)
 
+    - name: docker login
+      run: | # log into docker hub account
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD  
+
+    - name: Build the Docker image
+      run: docker build . --file slackware-gcc/Dockerfile --tag $DOCKER_USER/$REPO:slackware-gcc:15.0 # --tag slackware-gcc:$(date +%s)
+
+    - name: Docker Push
+      run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
