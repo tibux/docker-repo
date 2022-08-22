@@ -27,7 +27,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD  
 
     - name: Build the Docker image
-      run: docker build . --file slackware-gcc/Dockerfile --tag $DOCKER_USER/$REPO_NAME:15.0 # --tag slackware-gcc:$(date +%s)
+      run: docker build . --file $REPO_NAME/Dockerfile --tag $DOCKER_USER/$REPO_NAME:15.0 # --tag slackware-gcc:$(date +%s)
 
     - name: Docker Push
       run: docker push $DOCKER_USER/$REPO_NAME:15.0
