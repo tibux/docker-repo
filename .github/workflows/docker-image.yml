@@ -17,5 +17,6 @@ jobs:
     - uses: actions/checkout@master
     - name: Build the Docker image
       run: docker build . --file slackware-gcc/Dockerfile --tag slackware-gcc:$(date +%s)
+    - name: Build the Docker image
       run: docker build . --file slackware-git/Dockerfile --tag slackware-git:$(date +%s)
 
