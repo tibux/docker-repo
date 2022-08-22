@@ -11,14 +11,21 @@ on:
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  REPO_NAME: ${{secrets.REPO_NAME}}
+  REPO_VERSION: ${{secrets.REPO_VERSION}}
 
 jobs:
-
   build:
-
+    strategy:
+      max-parallel: 1
+      matrix:
+        include:
+          - name: slackware-gcc
+          - name: slackware-git
+          - name: slackware-omnibus
+          - name: slackware-sbopkg
+          - name: slackware-jdk
+          - name: slackware-multilib
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
 
@@ -27,7 +34,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD  
 
     - name: Build the Docker image
-      run: docker build . --file $REPO_NAME/Dockerfile --tag $DOCKER_USER/$REPO_NAME:15.0 # --tag slackware-gcc:$(date +%s)
+      run: docker build . --file ${{ matrix.name }}/Dockerfile --tag $DOCKER_USER/${{ matrix.name }}:$REPO_VERSION # --tag slackware-gcc:$(date +%s)
 
     - name: Docker Push
-      run: docker push $DOCKER_USER/$REPO_NAME:15.0
+      run: docker push $DOCKER_USER/${{ matrix.name }}:$REPO_VERSION
