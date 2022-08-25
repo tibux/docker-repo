@@ -8,4 +8,6 @@ RUN lftp -c 'open http://bear.alienbase.nl/mirrors/people/alien/multilib/ ; mirr
 RUN upgradepkg --reinstall --install-new ./15.0/*.t?z
 RUN upgradepkg --install-new ./15.0/slackware64-compat32/*-compat32/*.t?z
 
-RUN . /etc/profile.d/32dev.sh
+RUN echo '\
+        . /etc/profile ; \
+    ' >> /root/.profile
