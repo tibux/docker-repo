@@ -27,7 +27,6 @@ jobs:
           - name: slackware-multilib
           - name: slackware-steam
           - name: centos-omnibus
-          - name: debian-solr
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
