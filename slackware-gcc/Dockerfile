@@ -1,4 +1,4 @@
-FROM vbatts/slackware:15.0
+FROM aclemons/slackware:15.0
 MAINTAINER Thibaut Notteboom <thibaut.notteboom@gmail.com>
 
 RUN slackpkg -batch=on -default_answer=y update
