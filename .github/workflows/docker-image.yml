@@ -26,7 +26,6 @@ jobs:
           - name: slackware-jdk
           - name: slackware-multilib
           - name: slackware-steam
-          - name: centos-omnibus
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
